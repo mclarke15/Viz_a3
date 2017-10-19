@@ -79,8 +79,8 @@ class Line_chart {
         popMatrix();
         /* end rotate text */
           
-        if (xPos >= x && xPos <= x + pointRadius 
-                      && yPos >= y - barHeight && yPos <= y) {
+        if (xPos >= x - pointRadius && xPos <= x + pointRadius 
+                      && yPos >= y - barHeight - pointRadius && yPos <= y - barHeight + pointRadius) {
           if (i != xNum - 1) {
             line(x, y - barHeight, x2, y2 - barHeight2);
           }

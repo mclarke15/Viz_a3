@@ -32,6 +32,7 @@ void setup()
   barpie = new button(buttonC, text2, 75, 30, 20, 30, 12);
   
   size(800, 600);
+  frameRate(4);
   String[] lines = loadStrings("data.csv");
   times = new String[lines.length - 1];
   temps = new float[lines.length - 1];
@@ -39,8 +40,8 @@ void setup()
     String[] content = split(lines[i], ",");
     times[i-1] = content[0];
     temps[i-1] = float(content[1]);
-    println(times[i-1]);
-    println(temps[i-1]); 
+    //println(times[i-1]);
+    //println(temps[i-1]); 
   }
   
   barChart = new Bar_chart("", "", times, temps); 
@@ -67,10 +68,17 @@ void draw()
     background(255);
     barpie.drawButton();
     pieChart.render(width/2, height/2 , height*.4); 
-  } /*else if (state == "barToline") {
+  } else if (state == "barToLine") {
+    //print("here??"); 
+    //barLine.render(mouseX, mouseY);
+    //barLine.renderPoints(); 
+    barLine.renderLine();
+    barline.drawButton();
+    println("done"); 
+    //state = "line";
+  } /*else if (state == "lineToBar") {
     barLine.render(mouseX, mouseY);
     state = "line";
-  } else if (state == "lineToBar") {
   }*/
  
 }
@@ -79,8 +87,8 @@ void mouseClicked() {
     if (mouseX > barline.X1 && mouseX < barline.X2 && mouseY > barline.Y1 && mouseY < barline.Y2) {
       if (state == "bar") {
        text1 = "bar";
-       state = "line";
-       //state = "barToLine";
+       //state = "line";
+       state = "barToLine";
       } else if (state == "line") {
        text1 = "line"; 
        state = "bar";

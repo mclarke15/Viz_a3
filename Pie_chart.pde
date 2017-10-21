@@ -51,36 +51,6 @@ class Pie_chart {
       i++;
     }
   }
-  /*   void render(float x, float y, float radius) {
-    float startTheta = 0;
-    float theta;
-    boolean inCircle = mouseDistance(x, y) <= radius;
-    float mTheta = mouseTheta(x,y);
-    println("Mouse at " + mTheta);
-    ToolTip myTip; 
-    boolean inSegment = false;
-    boolean tip = false; 
-    String text = "";
-    for (DataPair d : data) {
-      theta = 2*PI * d._val / total;
-      inSegment = inCircle &&(mTheta < theta+startTheta) && (mTheta > startTheta);
-      if (inSegment) {
-        text = " (" + d._name + ", " + d._val + ") ";
-        fill(hoverC);
-        tip = true; 
-      }
-      else {
-        fill(chartC);
-        text = ""; 
-      }
-      arc(x, y, radius * 2, radius * 2, startTheta, theta + startTheta, PIE);    
-      startTheta += theta;
-    }
-    if (tip) {
-       myTip = new ToolTip(text, mouseX, mouseY);
-       myTip.render(); 
-     } 
-  }  */
  
   
   float mouseDistance(float x, float y) {

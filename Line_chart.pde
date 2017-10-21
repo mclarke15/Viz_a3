@@ -4,14 +4,13 @@ class Line_chart {
   float[] values;
   int yMin, yMax, xNum; 
   float padding = 0.15; 
-  int pointRadius = 10; 
 
   Line_chart(String xTitle, String yTitle, String[] names, float[] values) {
     this.xTitle = xTitle;
     this.yTitle = yTitle;
     this.names = names;
     this.values = values;
-    this.yMin = 0; // min(int(values));
+    this.yMin = 0; 
     this.yMax = max(int(values)); 
     this.xNum = names.length; 
   }

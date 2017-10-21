@@ -60,9 +60,6 @@ class Bar_chart {
           fill(chartC); 
           rect(x, y - barHeight, barWidth, barHeight);
         }
-       
-        //rect(x, y - barHeight, barWidth, barHeight);
-        //text(barHeight / ySpacing, x, y - barHeight); 
         
     }
     if (t != null) {
@@ -71,7 +68,6 @@ class Bar_chart {
     
     int NUMTICKS = 10;
     float yInterval = yMax / NUMTICKS;
-    //for (int i = yMin; i <= yMax + yInterval; i+=yInterval) {
     for (int i = yMin; i <= yMax; i+=yInterval) {
       pushStyle(); 
       textAlign(RIGHT); 
@@ -85,7 +81,6 @@ class Bar_chart {
     translate(padding*width/2, (1 - padding)*height / 2); //change origin 
     rotate(PI/2); //rotate around new origin 
     fill(0);
-    //textAlign(CENTER);
     text(yTitle, 0, 0); //put text at new origin 
     popMatrix();
   }

@@ -29,7 +29,7 @@ class Pie_chart {
     boolean inCircle = mouseDistance(x, y) <= radius;
     float mTheta = mouseTheta(x,y);
 
-    ToolTip myTip; 
+    ToolTip myTip = null; 
     boolean inSegment;
     String text;
     i = 0;
@@ -48,16 +48,20 @@ class Pie_chart {
       startTheta += theta;
       if (inSegment) {
         myTip = new ToolTip(text, mouseX, mouseY);
-        myTip.render(); 
+        //myTip.render(); 
       } 
       i++;
     }
+   if (myTip != null) {
+       myTip.render();  
+    }
+    
 }
- 
-  
+
   float mouseDistance(float x, float y) {
     return sqrt(pow(x - mouseX, 2) + pow(y - mouseY, 2));
   }
+  
   float mouseTheta(float x, float y) {
     float mTheta = atan((mouseY - y)/(mouseX - x));
     if (mouseX > x) { // Right side

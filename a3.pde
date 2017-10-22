@@ -4,6 +4,7 @@ Line_chart lineChart;
 Pie_chart pieChart;
 BarLine barLine;
 LineBar lineBar;
+BarPie barPie; 
 String[] times;
 float[] temps;
 button barline;
@@ -51,6 +52,7 @@ void setup()
   pieChart = new Pie_chart("", "", times, temps); 
   barLine = new BarLine("", "", times, temps);
   lineBar = new LineBar("", "", times, temps);
+  barPie = new BarPie("", "", times, temps);
 }
 
 void draw() 
@@ -77,6 +79,10 @@ void draw()
   } else if (state == "lineToBar") {
     lineBar.render();
     barline.drawButton();
+  } else if (state == "barToPie") {
+    background(255);
+    barPie.render(width/2, height/2 , height*.4);
+    barpie.drawButton();
   }
  
 }
@@ -97,7 +103,7 @@ void mouseClicked() {
        state = "bar";
       } else if (state == "bar") {
        text2 = "bar"; 
-       state = "pie";
+       state = "barToPie";
       } 
     }
   }

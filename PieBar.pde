@@ -1,4 +1,4 @@
-class BarPie {
+class PieBar {
   float numShrinks = 50; 
   float numMovesBarShrinks = 50; 
   float numBarMoves = 50; 
@@ -26,7 +26,7 @@ class BarPie {
     } 
   }
 
-  BarPie(String xTitle, String yTitle, String[] names, float[] values) {
+  PieBar(String xTitle, String yTitle, String[] names, float[] values) {
       this.xTitle = xTitle;
       this.yTitle = yTitle;
       this.names = names;
@@ -47,17 +47,16 @@ class BarPie {
   }
   
   void render(float x, float y, float radius) {   
-    if (z >= 0 && z < numMovesBarShrinks) {
-       renderBars(x, y, radius); 
-    } else if (z >= numMovesBarShrinks && z < numMovesBarShrinks + numBarMoves) {
+    if (z >= 0 && z < numShrinks) {
+       renderPie(x, y, radius);
+       renderDonutGrow(x, y, radius); 
+    } else if (z >= numShrinks && z < numShrinks + numBarMoves) {
        renderBarMove(x, y, radius); 
-    } else if (z >= numMovesBarShrinks + numBarMoves && z < numShrinks + numBarMoves + numMovesBarShrinks) {
-      renderDonutShrink(x, y, radius); 
-    } else if (z == numShrinks + numBarMoves + numMovesBarShrinks){
-      renderPie(x, y, radius); 
+    } else if (z >= numShrinks + numBarMoves && z < numShrinks + numBarMoves + numMovesBarShrinks) {
+        renderBars(x, y, radius); 
     } else {
-      state = "pie"; 
-      z = 0;
+       state = "bar";
+       z = 0; 
     }
     z++;
   }
@@ -77,6 +76,8 @@ class BarPie {
     float endLen; 
     float deltaLen; 
     
+    float tempZ = z - numShrinks - numBarMoves; 
+    
     for (int i = 0; i < xNum; i++) {
         float xBar, yBar; 
         xBar = xStart + spacing * i; 
@@ -87,12 +88,12 @@ class BarPie {
         endLen = radius * theta;   
         deltaLen = barHeight - endLen; 
         fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255); 
-        rect(xBar, yBar- barHeight, barWidth, barHeight - deltaLen * (z / numMovesBarShrinks));
+        rect(xBar, yBar- barHeight, barWidth, barHeight - deltaLen * (1 - tempZ / numMovesBarShrinks));
     }
   }
   
   void renderBarMove(float x, float y, float radius) {
-    fill(255); 
+fill(255); 
     rect(0, 0, width, height); 
     fill(0); 
  
@@ -116,11 +117,9 @@ class BarPie {
     float startTheta = 0;
         
     for (int i = 0; i < xNum; i++) {
-        float xBar, yBar, nxBar, nyBar; 
+        float xBar, yBar; 
         xBar = xStart + spacing * i; 
         yBar = yStart; 
-        nxBar = xStart + spacing * ((i + 1) % xNum);
-        nyBar = yStart;
         float barHeight = values[i]*ySpacing - yMin*ySpacing; 
         
         DataPair d = data.get(i);  
@@ -140,23 +139,25 @@ class BarPie {
         botXs[i] = endPosX;  
         botYs[i] = endPosY;
         
-       // println("endX " + endPosX);
-       // println("endY " + endPosY);
         deltaPosX = endPosX - xBar;
         deltaPosY = endPosY - yBar; 
      
         endLen = radius * theta;   
         fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255); 
         
-        float tempZ = z - numMovesBarShrinks;
+        float tempZ = z - numShrinks;
         float endBarMove = numBarMoves * 0.66; 
-        //println(endBarMove); 
 
         if (tempZ < endBarMove) {
-          float bottomLX = xBar + deltaPosX * (tempZ / endBarMove);  
-          float bottomLY = (yBar- barHeight) - deltaPosY * (tempZ / endBarMove);  
-          float topLX = bottomLX;
-          float topLY = bottomLY + endLen;
+          float topLX = topXs[i];
+          float topLY = topYs[i];
+          
+          float deltaX = topLX - botXs[i];
+          float deltaY = topLY + endLen - botYs[i]; 
+          
+          float bottomLX = botXs[i] + (tempZ / endBarMove) * deltaX;
+          float bottomLY = botYs[i] + + (tempZ / endBarMove) * deltaY;
+          
           beginShape();
             vertex(topLX, topLY);
             vertex(topLX + barWidth, topLY);
@@ -164,36 +165,33 @@ class BarPie {
             vertex(bottomLX, bottomLY);
            endShape(CLOSE);
         } else {
-          tempZ = tempZ - endBarMove + 1;        
-          ndeltaPosX = topXs[(i + 1) % xNum] - botXs[i];
-          ndeltaPosY = topYs[(i + 1) % xNum] - botYs[i]; 
+          tempZ = tempZ - endBarMove + 1; 
+          println(tempZ); 
           
-          float topLX = topXs[i];
-          float topLY = topYs[i]; 
-          float bottomLX = topXs[(i + 1) % xNum] - ndeltaPosX *  (1 - (tempZ / (numBarMoves - endBarMove)));  
-          float bottomLY = topYs[(i + 1) % xNum] - ndeltaPosY * (1 - (tempZ / (numBarMoves - endBarMove))); 
-          float barW = barWidth  -  barWidth *  (tempZ / (numBarMoves - endBarMove)); 
-        
+          float deltaX = xBar - topXs[i]; 
+          float deltaY = yBar- barHeight - topYs[i]; 
+          
+          float topLX = topXs[i] + (tempZ / (numBarMoves - endBarMove)) * deltaX;
+          float topLY = topYs[i] + (tempZ / (numBarMoves - endBarMove)) * deltaY;
+          
           beginShape();
             vertex(topLX, topLY);
-            //vertex(topLX + barW, topLY);
             vertex(topLX + barWidth, topLY);
-            //vertex(bottomLX + barW, bottomLY);
-            vertex(bottomLX + barWidth, bottomLY);
-            vertex(bottomLX, bottomLY);
+            vertex(topLX + barWidth, topLY + endLen);
+            vertex(topLX, topLY + endLen);
            endShape(CLOSE);
         }
     } 
   }
   
-  void renderDonutShrink(float x, float y, float radius) {
+  void renderDonutGrow(float x, float y, float radius) {
     float spacing = (width - 2*padding*width)/xNum; 
     float barWidth = barFill*spacing;
     float startTheta = 0;
     float theta;
     boolean inCircle = mouseDistance(x, y) <= radius;
     float mTheta = mouseTheta(x,y);
-    float innerRadius = (radius - barWidth) - (((z - numMovesBarShrinks - numBarMoves) /numShrinks) * (radius - barWidth)); 
+    float innerRadius = (radius - barWidth) - ( (1 - z/numShrinks) * (radius - barWidth)); 
 
     ToolTip myTip; 
     boolean inSegment;

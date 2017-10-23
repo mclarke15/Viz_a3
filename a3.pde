@@ -5,6 +5,7 @@ Pie_chart pieChart;
 BarLine barLine;
 LineBar lineBar;
 BarPie barPie; 
+PieBar pieBar; 
 String[] times;
 float[] temps;
 button barline;
@@ -35,8 +36,9 @@ void setup()
   barpie = new button(buttonC, text2, 75, 30, 20, 30, 12);
   
   size(800, 600);
-  frameRate(15);
+  frameRate(10);
   String[] lines = loadStrings("data.csv");
+  String[] headers = split(lines[0],   ",");
   times = new String[lines.length - 1];
   temps = new float[lines.length - 1];
   for(int i = 1; i < lines.length; i++){
@@ -47,12 +49,13 @@ void setup()
     //println(temps[i-1]); 
   }
   
-  barChart = new Bar_chart("", "", times, temps); 
-  lineChart = new Line_chart("", "", times, temps); 
-  pieChart = new Pie_chart("", "", times, temps); 
-  barLine = new BarLine("", "", times, temps);
-  lineBar = new LineBar("", "", times, temps);
-  barPie = new BarPie("", "", times, temps);
+  barChart = new Bar_chart(headers[0], headers[1], times, temps); 
+  lineChart = new Line_chart(headers[0], headers[1], times, temps); 
+  pieChart = new Pie_chart(headers[0], headers[1], times, temps); 
+  barLine = new BarLine(headers[0], headers[1], times, temps);
+  lineBar = new LineBar(headers[0], headers[1], times, temps);
+  barPie = new BarPie(headers[0], headers[1], times, temps);
+  pieBar = new PieBar(headers[0], headers[1], times, temps); 
 }
 
 void draw() 
@@ -70,7 +73,7 @@ void draw()
     lineChart.render(mouseX, mouseY);
     barline.drawButton();
   } else if (state == "pie") {
-    //background(255);
+    background(255);
     barpie.drawButton();
     pieChart.render(width/2, height/2 , height*.4); 
   } else if (state == "barToLine") {
@@ -80,8 +83,11 @@ void draw()
     lineBar.render();
     barline.drawButton();
   } else if (state == "barToPie") {
-    background(255);
+    //background(255);
     barPie.render(width/2, height/2 , height*.4);
+    barpie.drawButton();
+  } else if (state == "pieToBar") {
+    pieBar.render(width/2, height/2 , height*.4);
     barpie.drawButton();
   }
  
@@ -100,7 +106,7 @@ void mouseClicked() {
     if (mouseX > barpie.X1 && mouseX < barpie.X2 && mouseY > barpie.Y1 && mouseY < barpie.Y2) {
       if (state == "pie") {
        text2 = "pie"; 
-       state = "bar";
+       state = "pieToBar";
       } else if (state == "bar") {
        text2 = "bar"; 
        state = "barToPie";

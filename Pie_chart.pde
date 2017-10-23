@@ -37,11 +37,13 @@ class Pie_chart {
       theta = 2*PI * d._val / total;
       inSegment = inCircle &&(mTheta < theta+startTheta) && (mTheta > startTheta);
       if (inSegment) {
-        text = " (" + d._name + ", " + d._val + ") ";
+        String percentage = String.format("%.1f", (d._val/total) * 100);
+        text = percentage + "% (" + d._name + ", " + d._val + ") ";
         fill(hoverC);
       }
       else {
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255);
+        //fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255);
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
         text = ""; 
       }
       arc(x, y, radius * 2, radius * 2, startTheta, theta + startTheta, PIE);    

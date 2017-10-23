@@ -1,7 +1,4 @@
 class BarPie {
-  float numShrinks = 50; 
-  float numMovesBarShrinks = 50; 
-  float numBarMoves = 50; 
   float total = 0;
   ArrayList<DataPair> data = new ArrayList();
   int i = 0;
@@ -52,6 +49,7 @@ class BarPie {
     } else if (z >= numMovesBarShrinks && z < numMovesBarShrinks + numBarMoves) {
        renderBarMove(x, y, radius); 
     } else if (z >= numMovesBarShrinks + numBarMoves && z < numShrinks + numBarMoves + numMovesBarShrinks) {
+      background(255);
       renderDonutShrink(x, y, radius); 
     } else if (z == numShrinks + numBarMoves + numMovesBarShrinks){
       renderPie(x, y, radius); 
@@ -83,11 +81,11 @@ class BarPie {
         yBar = yStart; 
         float barHeight = values[i]*ySpacing - yMin*ySpacing; 
         DataPair d = data.get(i);  
-        theta = 2*PI * d._val / total;  
-        endLen = radius * theta;   
-        deltaLen = barHeight - endLen; 
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255); 
-        rect(xBar, yBar- barHeight, barWidth, barHeight - deltaLen * (z / numMovesBarShrinks));
+        theta = 2*PI * d._val / total;
+        endLen = radius * theta;     
+        deltaLen = endLen - barHeight; 
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
+        rect(xBar, yBar- barHeight, barWidth, barHeight + deltaLen * (z / numMovesBarShrinks));
     }
   }
   
@@ -102,25 +100,14 @@ class BarPie {
     float xStart = width*padding; 
     float yStart = height*(1-padding); 
     float ySpacing = (height - 2*padding*height) / (yMax - yMin);  
-    float theta; 
-    float nextTheta; 
-    float endLen; 
-    float deltaPosX;
-    float deltaPosY; 
-    float endPosX;
-    float endPosY; 
-    float ndeltaPosX;
-    float ndeltaPosY; 
-    float nendPosX;
-    float nendPosY; 
+    float theta, nextTheta, endLen, deltaPosX, deltaPosY, endPosX, endPosY; 
+    float ndeltaPosX, ndeltaPosY, nendPosX, nendPosY; 
     float startTheta = 0;
         
     for (int i = 0; i < xNum; i++) {
-        float xBar, yBar, nxBar, nyBar; 
+        float xBar, yBar; 
         xBar = xStart + spacing * i; 
         yBar = yStart; 
-        nxBar = xStart + spacing * ((i + 1) % xNum);
-        nyBar = yStart;
         float barHeight = values[i]*ySpacing - yMin*ySpacing; 
         
         DataPair d = data.get(i);  
@@ -139,46 +126,43 @@ class BarPie {
         topYs[i] = nendPosY;
         botXs[i] = endPosX;  
         botYs[i] = endPosY;
-        
-       // println("endX " + endPosX);
-       // println("endY " + endPosY);
-        deltaPosX = endPosX - xBar;
-        deltaPosY = endPosY - yBar; 
-     
+       
         endLen = radius * theta;   
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255); 
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
         
         float tempZ = z - numMovesBarShrinks;
         float endBarMove = numBarMoves * 0.66; 
-        //println(endBarMove); 
 
-        if (tempZ < endBarMove) {
-          float bottomLX = xBar + deltaPosX * (tempZ / endBarMove);  
-          float bottomLY = (yBar- barHeight) - deltaPosY * (tempZ / endBarMove);  
-          float topLX = bottomLX;
-          float topLY = bottomLY + endLen;
+        if (tempZ < endBarMove + 1) {
+
+          deltaPosX = topXs[i] - xBar; 
+          deltaPosY = topYs[i] - (yBar - barHeight);
+          
+          float topLX = xBar + (((tempZ / (endBarMove)) * deltaPosX));
+          float topLY = (yBar - barHeight) + (((tempZ / (endBarMove)) * deltaPosY));
+          
           beginShape();
             vertex(topLX, topLY);
             vertex(topLX + barWidth, topLY);
-            vertex(bottomLX + barWidth, bottomLY);
-            vertex(bottomLX, bottomLY);
+            vertex(topLX + barWidth, topLY + endLen);
+            vertex(topLX, topLY + endLen);
            endShape(CLOSE);
         } else {
           tempZ = tempZ - endBarMove + 1;        
-          ndeltaPosX = topXs[(i + 1) % xNum] - botXs[i];
-          ndeltaPosY = topYs[(i + 1) % xNum] - botYs[i]; 
-          
-          float topLX = topXs[i];
-          float topLY = topYs[i]; 
-          float bottomLX = topXs[(i + 1) % xNum] - ndeltaPosX *  (1 - (tempZ / (numBarMoves - endBarMove)));  
-          float bottomLY = topYs[(i + 1) % xNum] - ndeltaPosY * (1 - (tempZ / (numBarMoves - endBarMove))); 
-          float barW = barWidth  -  barWidth *  (tempZ / (numBarMoves - endBarMove)); 
         
+          float topLX = topXs[i];
+          float topLY = topYs[i];
+          
+          ndeltaPosX = botXs[i] - topLX; 
+          ndeltaPosY = botYs[i] - topLY - endLen; 
+              
+          float bottomLX = topLX + (tempZ / (numBarMoves - endBarMove)) * ndeltaPosX;
+          float bottomLY = topLY + endLen + (tempZ / (numBarMoves - endBarMove)) * ndeltaPosY;
+        
+          
           beginShape();
             vertex(topLX, topLY);
-            //vertex(topLX + barW, topLY);
             vertex(topLX + barWidth, topLY);
-            //vertex(bottomLX + barW, bottomLY);
             vertex(bottomLX + barWidth, bottomLY);
             vertex(bottomLX, bottomLY);
            endShape(CLOSE);
@@ -203,11 +187,12 @@ class BarPie {
       theta = 2*PI * d._val / total;
       inSegment = inCircle &&(mTheta < theta+startTheta) && (mTheta > startTheta);
       if (inSegment) {
-        text = " (" + d._name + ", " + d._val + ") ";
+        String percentage = String.format("%.1f", (d._val/total) * 100);
+        text = percentage + "% (" + d._name + ", " + d._val + ") ";
         fill(hoverC);
       }
       else {
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255);
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
         text = ""; 
       }
       arc(x, y, radius * 2, radius * 2, startTheta, theta + startTheta, PIE);    
@@ -259,11 +244,12 @@ class BarPie {
       theta = 2*PI * d._val / total;
       inSegment = inCircle &&(mTheta < theta+startTheta) && (mTheta > startTheta);
       if (inSegment) {
-        text = " (" + d._name + ", " + d._val + ") ";
+        String percentage = String.format("%.1f", (d._val/total) * 100);
+        text = percentage + "% (" + d._name + ", " + d._val + ") ";
         fill(hoverC);
       }
       else {
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255);
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
         text = ""; 
       }
       arc(x, y, radius * 2, radius * 2, startTheta, theta + startTheta, PIE);    

@@ -1,7 +1,4 @@
-class PieBar {
-  float numShrinks = 50; 
-  float numMovesBarShrinks = 50; 
-  float numBarMoves = 50; 
+class PieBar { 
   float total = 0;
   ArrayList<DataPair> data = new ArrayList();
   int i = 0;
@@ -46,7 +43,10 @@ class PieBar {
       botYs = new float[xNum]; 
   }
   
-  void render(float x, float y, float radius) {   
+  void render(float x, float y, float radius) {
+    if (z == 0) {
+     background(255); 
+    } 
     if (z >= 0 && z < numShrinks) {
        renderPie(x, y, radius);
        renderDonutGrow(x, y, radius); 
@@ -84,10 +84,10 @@ class PieBar {
         yBar = yStart; 
         float barHeight = values[i]*ySpacing - yMin*ySpacing; 
         DataPair d = data.get(i);  
-        theta = 2*PI * d._val / total;  
-        endLen = radius * theta;   
+        theta = 2*PI * d._val / total;
+        endLen = radius * theta;    
         deltaLen = barHeight - endLen; 
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255); 
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc);  
         rect(xBar, yBar- barHeight, barWidth, barHeight - deltaLen * (1 - tempZ / numMovesBarShrinks));
     }
   }
@@ -142,8 +142,8 @@ class PieBar {
         deltaPosX = endPosX - xBar;
         deltaPosY = endPosY - yBar; 
      
-        endLen = radius * theta;   
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255); 
+        endLen = radius * theta;      
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc);  
         
         float tempZ = z - numShrinks;
         float endBarMove = numBarMoves * 0.66; 
@@ -201,11 +201,12 @@ class PieBar {
       theta = 2*PI * d._val / total;
       inSegment = inCircle &&(mTheta < theta+startTheta) && (mTheta > startTheta);
       if (inSegment) {
-        text = " (" + d._name + ", " + d._val + ") ";
+        String percentage = String.format("%.1f", (d._val/total) * 100);
+        text = percentage + "% (" + d._name + ", " + d._val + ") ";
         fill(hoverC);
       }
       else {
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255);
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
         text = ""; 
       }
       arc(x, y, radius * 2, radius * 2, startTheta, theta + startTheta, PIE);    
@@ -257,11 +258,12 @@ class PieBar {
       theta = 2*PI * d._val / total;
       inSegment = inCircle &&(mTheta < theta+startTheta) && (mTheta > startTheta);
       if (inSegment) {
-        text = " (" + d._name + ", " + d._val + ") ";
+        String percentage = String.format("%.1f", (d._val/total) * 100);
+        text = percentage + "% (" + d._name + ", " + d._val + ") ";
         fill(hoverC);
       }
       else {
-        fill((chartR + (redInc*(i%div)))%255, (chartB + (blueInc*(i%div)))%255, (chartG + (greenInc*(i%div)))%255);
+        fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
         text = ""; 
       }
       arc(x, y, radius * 2, radius * 2, startTheta, theta + startTheta, PIE);    

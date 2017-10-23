@@ -43,7 +43,7 @@ class LineBar {
     line(padding*width, (1 - padding)*height, (1 - padding)*width, (1 - padding)*height);
     pushStyle();
     textAlign(CENTER); 
-    text(xTitle, ((1 - padding)*width - padding*width), (1 - padding/3)*height);
+    text(xTitle, width/2, (1 - padding/3)*height);
     popStyle(); 
 
     //spacing 
@@ -64,7 +64,7 @@ class LineBar {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           
@@ -96,7 +96,7 @@ class LineBar {
     
     line(padding*width, padding*height, padding*width, (1 - padding)*height);  
     pushMatrix();
-    translate(padding*width/2, (1 - padding)*height / 2); //change origin 
+    translate(padding*width/2, height / 2); //change origin 
     rotate(PI/2); //rotate around new origin 
     fill(0);
     text(yTitle, 0, 0); //put text at new origin 
@@ -111,7 +111,7 @@ class LineBar {
     line(padding*width, (1 - padding)*height, (1 - padding)*width, (1 - padding)*height);
     pushStyle();
     textAlign(CENTER); 
-    text(xTitle, ((1 - padding)*width - padding*width), (1 - padding/3)*height);
+    text(xTitle, width/2, (1 - padding/3)*height);
     popStyle(); 
 
     //spacing 
@@ -132,19 +132,19 @@ class LineBar {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           
         if (mouseX >= x && mouseX <= x + barWidth 
                       && mouseY >= y - barHeight && mouseY <= y) {
           fill(hoverC);
-          rect(x, y - barHeight, barWidth, barHeight*(1 -(z/numShrinks)));
+          rect(x, y - barHeight, (barWidth) + ((z/numShrinks)*(2 * pointRadius - barWidth)), barHeight*(1 -(z/numShrinks)));
           fill(color(0, 0, 0));
           t = new ToolTip("(" + names[i] + ", " + values[i] + ")", mouseX, mouseY);
         } else {
           fill(chartC); 
-          rect(x, y - barHeight, barWidth, barHeight* (1 - (z/numShrinks)));
+          rect(x, y - barHeight, (barWidth) + ((z/numShrinks)*(2 * pointRadius - barWidth)), barHeight* (1 - (z/numShrinks)));
         }
         
     }
@@ -164,7 +164,7 @@ class LineBar {
     
     line(padding*width, padding*height, padding*width, (1 - padding)*height);  
     pushMatrix();
-    translate(padding*width/2, (1 - padding)*height / 2); //change origin 
+    translate(padding*width/2, height / 2); //change origin 
     rotate(PI/2); //rotate around new origin 
     fill(0);
     text(yTitle, 0, 0); //put text at new origin 
@@ -213,7 +213,7 @@ class LineBar {
     line(padding*width, (1 - padding)*height, (1 - padding)*width, (1 - padding)*height);
     pushStyle();
     textAlign(CENTER); 
-    text(xTitle, ((1 - padding)*width - padding*width), (1 - padding/3)*height);
+    text(xTitle, width/2, (1 - padding/3)*height);
     popStyle(); 
 
     //spacing 
@@ -235,7 +235,7 @@ class LineBar {
     
     line(padding*width, padding*height, padding*width, (1 - padding)*height);  
     pushMatrix();
-    translate(padding*width/2, (1 - padding)*height / 2); //change origin 
+    translate(padding*width/2, height / 2); //change origin 
     rotate(PI/2); //rotate around new origin 
     fill(0);
     text(yTitle, 0, 0); //put text at new origin 
@@ -252,7 +252,7 @@ class LineBar {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           
@@ -280,7 +280,7 @@ class LineBar {
     line(padding*width, (1 - padding)*height, (1 - padding)*width, (1 - padding)*height);
     pushStyle();
     textAlign(CENTER); 
-    text(xTitle, ((1 - padding)*width - padding*width), (1 - padding/3)*height);
+    text(xTitle, width/2, (1 - padding/3)*height);
     popStyle(); 
 
     //spacing 
@@ -303,7 +303,7 @@ class LineBar {
     
     line(padding*width, padding*height, padding*width, (1 - padding)*height);  
     pushMatrix();
-    translate(padding*width/2, (1 - padding)*height / 2); //change origin 
+    translate(padding*width/2, height / 2); //change origin 
     rotate(PI/2); //rotate around new origin 
     fill(0);
     //textAlign(CENTER);
@@ -331,7 +331,7 @@ class LineBar {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           

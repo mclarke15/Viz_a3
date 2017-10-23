@@ -24,7 +24,7 @@ class Bar_chart {
     line(padding*width, (1 - padding)*height, (1 - padding)*width, (1 - padding)*height);
     pushStyle();
     textAlign(CENTER); 
-    text(xTitle, ((1 - padding)*width - padding*width), (1 - padding/3)*height);
+    text(xTitle, width/2, (1 - padding/3)*height);
     popStyle(); 
 
     //spacing 
@@ -45,7 +45,7 @@ class Bar_chart {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           
@@ -78,7 +78,8 @@ class Bar_chart {
     
     line(padding*width, padding*height, padding*width, (1 - padding)*height);  
     pushMatrix();
-    translate(padding*width/2, (1 - padding)*height / 2); //change origin 
+    translate(padding*width/2, height / 2); //change origin 
+    //translate(padding*width/2, (1 - padding)*height / 2); //change origin 
     rotate(PI/2); //rotate around new origin 
     fill(0);
     text(yTitle, 0, 0); //put text at new origin 

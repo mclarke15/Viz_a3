@@ -1,7 +1,4 @@
 class BarPie {
-  float numShrinks = 50; 
-  float numMovesBarShrinks = 50; 
-  float numBarMoves = 50; 
   float total = 0;
   ArrayList<DataPair> data = new ArrayList();
   int i = 0;
@@ -86,9 +83,9 @@ class BarPie {
         DataPair d = data.get(i);  
         theta = 2*PI * d._val / total;
         endLen = radius * theta;     
-        deltaLen = barHeight - endLen; 
+        deltaLen = endLen - barHeight; 
         fill(chartR + redInc, chartB + blueInc, chartG + greenInc); 
-        rect(xBar, yBar- barHeight, barWidth, barHeight - deltaLen * (z / numMovesBarShrinks));
+        rect(xBar, yBar- barHeight, barWidth, barHeight + deltaLen * (z / numMovesBarShrinks));
     }
   }
   

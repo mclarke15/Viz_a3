@@ -1,7 +1,4 @@
-class PieBar {
-  float numShrinks = 50; 
-  float numMovesBarShrinks = 50; 
-  float numBarMoves = 50; 
+class PieBar { 
   float total = 0;
   ArrayList<DataPair> data = new ArrayList();
   int i = 0;

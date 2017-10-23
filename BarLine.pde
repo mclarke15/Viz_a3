@@ -63,7 +63,7 @@ class BarLine {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           
@@ -131,7 +131,7 @@ class BarLine {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           
@@ -272,7 +272,7 @@ class BarLine {
         translate(x, y); //change origin 
         rotate(PI/2); //rotate around new origin 
         fill(0);
-        text(" " + names[i], spacing, 0); //put text at new origin 
+        //text(" " + names[i], spacing, 0); //put text at new origin 
         popMatrix();
         /* end rotate text */
           

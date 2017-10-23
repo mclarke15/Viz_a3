@@ -17,8 +17,10 @@ String text1, text2;
 float total = 0; 
 String suggestionText = "";
 
-
 int pointRadius = 2; //10
+float numShrinks = 50; 
+float numMovesBarShrinks = 50; 
+float numBarMoves = 50;
 
 /* color */
 color buttonA = color(164, 176, 245);
@@ -41,7 +43,7 @@ void setup()
   
   size(800, 600);
   frameRate(10);
-  String[] lines = loadStrings("data.csv");
+  String[] lines = loadStrings("data3.csv");
   String[] headers = split(lines[0],   ",");
   times = new String[lines.length - 1];
   temps = new float[lines.length - 1];

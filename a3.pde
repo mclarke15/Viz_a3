@@ -70,7 +70,7 @@ void draw()
     lineChart.render(mouseX, mouseY);
     barline.drawButton();
   } else if (state == "pie") {
-    background(255);
+    //background(255);
     barpie.drawButton();
     pieChart.render(width/2, height/2 , height*.4); 
   } else if (state == "barToLine") {

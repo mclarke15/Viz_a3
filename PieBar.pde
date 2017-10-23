@@ -93,7 +93,7 @@ class PieBar {
   }
   
   void renderBarMove(float x, float y, float radius) {
-fill(255); 
+    fill(255); 
     rect(0, 0, width, height); 
     fill(0); 
  
@@ -156,7 +156,7 @@ fill(255);
           float deltaY = topLY + endLen - botYs[i]; 
           
           float bottomLX = botXs[i] + (tempZ / endBarMove) * deltaX;
-          float bottomLY = botYs[i] + + (tempZ / endBarMove) * deltaY;
+          float bottomLY = botYs[i] +  (tempZ / endBarMove) * deltaY;
           
           beginShape();
             vertex(topLX, topLY);
@@ -166,7 +166,7 @@ fill(255);
            endShape(CLOSE);
         } else {
           tempZ = tempZ - endBarMove + 1; 
-          println(tempZ); 
+          //println(tempZ); 
           
           float deltaX = xBar - topXs[i]; 
           float deltaY = yBar- barHeight - topYs[i]; 

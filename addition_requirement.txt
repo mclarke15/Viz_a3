@@ -1,0 +1,21 @@
+Meredith Clarke and Abby Mosca
+
+For our additional requirement we made three improvements.
+
+(1) We added color to improve the asthetic of the visualization.
+
+(2) We drew axes on our bar and line graphs, to make them
+	more informative. 
+
+(3) We added a suggestion bar to the top of the visualization The 
+    purpose of this bar is to help users understand what each different 
+    visualization shows. For example, the suggestion bar when the 
+    bar chart is shown reads "Try 'Line' for trends and 'Pie' for 
+    parts of a whole!". When the pie chart is shown the suggestion
+    is "Try 'Bar' to compare Y values!". And finally, when the line
+    chart is shown the suggestion is "Try 'Bar' to compare Y values!". 
+    Our hope with these suggestions is that users will understand that
+    a line chart is best for understanding trends in the data, a bar 
+    chart is best for comparing y-values in the data, and a pie
+    chart is best for comparing each y-value as a part of the whole
+    data set. 

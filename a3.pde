@@ -8,15 +8,23 @@ BarPie barPie;
 PieBar pieBar; 
 String[] times;
 float[] temps;
-button barline;
-button barpie;
+button bar;
+button line;
+button pie;
+button suggestion;
 String state;
 String text1, text2;
-float total = 0;
-int pointRadius = 10; 
+float total = 0; 
+String suggestionText = "";
+
+
+int pointRadius = 2; //10
 
 /* color */
+color buttonA = color(164, 176, 245);
+color buttonB = color(164, 176, 245);
 color buttonC = color(164, 176, 245);
+color buttonD = color(222, 107, 72);
 int chartR = 68; //68
 int chartB = 100; //100 
 int chartG = 173; //173
@@ -30,10 +38,6 @@ color hoverC = color(222, 107, 72);
 void setup()
 { 
   state = "bar";
-  text1 = "line";
-  text2 = "pie";
-  barline = new button(buttonC, text1, 40, 30, 20, 30, 12);
-  barpie = new button(buttonC, text2, 75, 30, 20, 30, 12);
   
   size(800, 600);
   frameRate(10);
@@ -60,56 +64,74 @@ void setup()
 
 void draw() 
 {
-  barpie = new button(buttonC, text2, 40, 30, 65, 30, 12);
-  barline = new button(buttonC, text1, 40, 30, 20, 30, 12);
+  bar = new button(buttonA, "bar", 40, 30, 20, 30, 12);
+  line = new button(buttonB, "line", 40, 30, 70, 30, 12);
+  pie = new button(buttonC, "pie", 40, 30, 120, 30, 12);
+  suggestion = new button(buttonD, suggestionText, int(textWidth(suggestionText)), 30, 180 + int(textWidth(suggestionText))/2, 30, 12);
   
   if (state == "bar") {
     background(255);
+    buttonA = color(0);
+    buttonB = color(164, 176, 245);
+    buttonC = color(164, 176, 245);
     barChart.render(mouseX, mouseY);
-    barline.drawButton();
-    barpie.drawButton();
+    bar.drawButton();
+    line.drawButton();
+    pie.drawButton();
+    suggestionText = "  Try 'Line' for trends and 'Pie' for parts of a whole!  ";
+    suggestion.drawButton();
   } else if (state == "line") {
     background(255);
+    buttonA = color(164, 176, 245);
+    buttonB = color(0);
+    buttonC = color(0);
     lineChart.render(mouseX, mouseY);
-    barline.drawButton();
+    bar.drawButton();
+    line.drawButton();
+    pie.drawButton();
+    suggestionText = "  Try 'Bar' to compare Y values!  ";
+    suggestion.drawButton();
   } else if (state == "pie") {
     background(255);
-    barpie.drawButton();
+    buttonA = color(164, 176, 245);
+    buttonB = color(0);
+    buttonC = color(0);
+    line.drawButton();
+    bar.drawButton();
+    pie.drawButton();
+    suggestionText = "  Try 'Bar' to compare Y values!  ";
+    suggestion.drawButton();
     pieChart.render(width/2, height/2 , height*.4); 
   } else if (state == "barToLine") {
     barLine.render();
-    barline.drawButton();
   } else if (state == "lineToBar") {
     lineBar.render();
-    barline.drawButton();
   } else if (state == "barToPie") {
     //background(255);
     barPie.render(width/2, height/2 , height*.4);
-    barpie.drawButton();
   } else if (state == "pieToBar") {
     pieBar.render(width/2, height/2 , height*.4);
-    barpie.drawButton();
   }
  
 }
 
 void mouseClicked() {    
-    if (mouseX > barline.X1 && mouseX < barline.X2 && mouseY > barline.Y1 && mouseY < barline.Y2) {
-      if (state == "bar") {
-       text1 = "bar";
-       state = "barToLine";
-      } else if (state == "line") {
-       text1 = "line"; 
+
+    if (mouseX > bar.X1 && mouseX < bar.X2 && mouseY > bar.Y1 && mouseY < bar.Y2) {
+      if (state == "line") {
        state = "lineToBar";
+      } else if (state == "pie") {
+        state = "pieToBar";
+      }
+    }
+    if (mouseX > pie.X1 && mouseX < pie.X2 && mouseY > pie.Y1 && mouseY < pie.Y2) {
+      if (state == "bar") {
+       state = "barToPie";
       } 
     }
-    if (mouseX > barpie.X1 && mouseX < barpie.X2 && mouseY > barpie.Y1 && mouseY < barpie.Y2) {
-      if (state == "pie") {
-       text2 = "pie"; 
-       state = "pieToBar";
-      } else if (state == "bar") {
-       text2 = "bar"; 
-       state = "barToPie";
+    if (mouseX > line.X1 && mouseX < line.X2 && mouseY > line.Y1 && mouseY < line.Y2) {
+      if (state == "bar") {
+       state = "barToLine";
       } 
     }
   }

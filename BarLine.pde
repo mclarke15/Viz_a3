@@ -138,12 +138,12 @@ class BarLine {
         if (mouseX >= x && mouseX <= x + barWidth 
                       && mouseY >= y - barHeight && mouseY <= y) {
           fill(hoverC);
-          rect(x, y - barHeight, barWidth, barHeight*(1 - (z/numShrinks)));
+          rect(x, y - barHeight, (barWidth) - (1 - (z/numShrinks)*(2 * pointRadius - barWidth)), barHeight*(1 - (z/numShrinks)));
           fill(color(0, 0, 0));
           t = new ToolTip("(" + names[i] + ", " + values[i] + ")", mouseX, mouseY);
         } else {
           fill(chartC); 
-          rect(x, y - barHeight, barWidth, barHeight* (1 - (z/numShrinks)));
+          rect(x, y - barHeight, (barWidth) - (1 - (z/numShrinks)*(2 * pointRadius - barWidth)), barHeight* (1 - (z/numShrinks)));
         }
         
     }

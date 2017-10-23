@@ -46,7 +46,10 @@ class PieBar {
       botYs = new float[xNum]; 
   }
   
-  void render(float x, float y, float radius) {   
+  void render(float x, float y, float radius) {
+    if (z == 0) {
+     background(255); 
+    } 
     if (z >= 0 && z < numShrinks) {
        renderPie(x, y, radius);
        renderDonutGrow(x, y, radius); 
@@ -84,8 +87,8 @@ class PieBar {
         yBar = yStart; 
         float barHeight = values[i]*ySpacing - yMin*ySpacing; 
         DataPair d = data.get(i);  
-        theta = 2*PI * d._val / total;  
-        endLen = radius * theta;   
+        theta = 2*PI * d._val / total;
+        endLen = radius * theta;    
         deltaLen = barHeight - endLen; 
         fill(chartR + redInc, chartB + blueInc, chartG + greenInc);  
         rect(xBar, yBar- barHeight, barWidth, barHeight - deltaLen * (1 - tempZ / numMovesBarShrinks));
@@ -93,7 +96,7 @@ class PieBar {
   }
   
   void renderBarMove(float x, float y, float radius) {
-fill(255); 
+    fill(255); 
     rect(0, 0, width, height); 
     fill(0); 
  
@@ -142,7 +145,7 @@ fill(255);
         deltaPosX = endPosX - xBar;
         deltaPosY = endPosY - yBar; 
      
-        endLen = radius * theta;   
+        endLen = radius * theta;      
         fill(chartR + redInc, chartB + blueInc, chartG + greenInc);  
         
         float tempZ = z - numShrinks;
